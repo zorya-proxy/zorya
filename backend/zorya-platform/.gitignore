@@ -34,3 +34,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Database and secrets ###
+postgres-data/
+.env
+.postman/
