@@ -1,7 +1,7 @@
 package com.zorya.service;
 
 import com.zorya.core.domain.PiiProcessor;
-import com.zorya.core.domain.RiskLevel;
+import com.zorya.core.domain.model.RiskLevel;
 import com.zorya.dto.AnalyzeRequest;
 import com.zorya.dto.AnalyzeResponse;
 import com.zorya.infra.persistence.entity.AnalysisHistoryEntity;

@@ -1,6 +1,7 @@
 package com.zorya.infra.persistence.entity;
 
-import com.zorya.core.domain.RiskLevel;
+import com.zorya.core.domain.model.PiiEntityType;
+import com.zorya.core.domain.model.RiskLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +20,9 @@ public class FindingEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private  UUID id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type;
+    private PiiEntityType type;
 
     private String value;
 

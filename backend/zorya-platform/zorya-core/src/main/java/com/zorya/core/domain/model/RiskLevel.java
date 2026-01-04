@@ -1,4 +1,4 @@
-package com.zorya.core.domain;
+package com.zorya.core.domain.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
