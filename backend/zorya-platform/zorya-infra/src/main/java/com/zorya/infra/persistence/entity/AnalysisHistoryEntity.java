@@ -1,6 +1,6 @@
 package com.zorya.infra.persistence.entity;
 
-import com.zorya.core.domain.RiskLevel;
+import com.zorya.core.domain.model.RiskLevel;
 import jakarta.persistence.*;
 import lombok.*;
 

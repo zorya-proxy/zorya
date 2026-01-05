@@ -1,6 +1,7 @@
 package com.zorya.dto;
 
-import com.zorya.core.domain.RiskLevel;
+import com.zorya.core.domain.model.PiiEntityType;
+import com.zorya.core.domain.model.RiskLevel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +15,7 @@ public record AnalyzeResponse(
         List<Finding> findings
 ) {
     public record Finding(
-            String type,
+            PiiEntityType type,
             String value,
             int startIndex,
             int endIndex,
