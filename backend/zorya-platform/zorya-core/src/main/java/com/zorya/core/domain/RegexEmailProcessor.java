@@ -3,6 +3,7 @@ import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiEntityType;
 import com.zorya.core.domain.model.PiiFinding;
 import com.zorya.core.domain.model.RiskLevel;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Order(1)
 public class RegexEmailProcessor implements PiiProcessor {
     private static final Pattern EMAIL_ADDRESS_REGEX = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,7}");
     private static final String FINDING_MASK = "***";
