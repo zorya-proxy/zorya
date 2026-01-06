@@ -9,6 +9,8 @@ import com.zorya.infra.persistence.repository.AnalysisHistoryRepository;
 import com.zorya.mapper.AnalysisMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -28,5 +30,10 @@ public class AnalyzeService {
         AnalysisHistoryEntity savedEntity = analysisHistoryRepository.save(entity);
 
         return analysisMapper.toResponse(savedEntity);
+    }
+
+    public Page<AnalyzeResponse> getAllAnalyses(Pageable pageable) {
+        return analysisHistoryRepository.findAll(pageable)
+                .map(analysisMapper::toResponse);
     }
 }
