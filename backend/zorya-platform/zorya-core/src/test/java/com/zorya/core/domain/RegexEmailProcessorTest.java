@@ -1,4 +1,5 @@
-import com.zorya.core.domain.RegexEmailProcessor;
+package com.zorya.core.domain;
+
 import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiEntityType;
 import com.zorya.core.domain.model.RiskLevel;
