@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 @Order(3)
 public class RegexIbanProcessor implements PiiProcessor {
-    private static final Pattern IBAN_CANDIDATE_REGEX = Pattern.compile("(?i:PL)?\\d{26}");
+    private static final Pattern IBAN_CANDIDATE_REGEX = Pattern.compile("(?i:PL)?\\s*\\d{2}(?:[ -]*\\d{4}){6}");
     private static final String IBAN_MASK = "[IBAN_REDACTED]";
 
     @Override
