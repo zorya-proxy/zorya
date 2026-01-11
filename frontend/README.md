@@ -1,75 +1,121 @@
-# React + TypeScript + Vite
+# Zorya Proxy Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for **Zorya Proxy** - Enterprise AI Security Gateway protecting data privacy & optimizing costs.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is the web interface for Zorya Proxy, built with React, TypeScript, and Vite. It provides an intuitive dashboard for managing and monitoring your AI security gateway.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **TailwindCSS** - Styling
+- **React Router** - Navigation
+- **TanStack Query** - Data fetching and caching
+- **Biome** - Linting and formatting
+- **Radix UI** - Accessible components
 
-Note: This will impact Vite dev & build performances.
+## Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18+ 
+- npm or yarn
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Install Dependencies
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Run the development server:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+The application will be available at `http://localhost:5173` (default Vite port).
+
+### Building for Production
+
+Build the application:
+
+```bash
+npm run build
+```
+
+The production-ready files will be generated in the `dist` directory.
+
+### Preview Production Build
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Code Quality
+
+### Linting
+
+Check for code issues:
+
+```bash
+npm run lint
+```
+
+Auto-fix issues:
+
+```bash
+npm run lint:fix
+```
+
+### Formatting
+
+Format code:
+
+```bash
+npm run format
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── context/        # React contexts
+├── features/       # Feature-based modules
+├── hooks/          # Custom React hooks
+├── interfaces/     # TypeScript interfaces
+├── layouts/        # Layout components
+├── lib/            # Utility functions
+├── pages/          # Page components
+├── providers/      # React providers
+└── types/          # TypeScript types
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Check code with Biome
+- `npm run lint:fix` - Fix linting issues
+- `npm run format` - Format code with Biome
+
+## Contributing
+
+Ensure all code passes linting and formatting checks before committing:
+
+```bash
+npm run lint:fix
+npm run format
+```
+
+## License
+
+Copyright © 2026 Zorya Proxy. All rights reserved.

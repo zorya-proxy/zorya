@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["**", "!dist", "!build", "!node_modules", "!.next", "!coverage", "!src/components/ui"]
   },
   "formatter": {
     "enabled": true,
@@ -43,6 +44,16 @@
       "trailingCommas": "all",
       "semicolons": "always",
       "arrowParentheses": "always"
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2
+    },
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {

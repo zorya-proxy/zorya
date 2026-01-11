@@ -5,7 +5,22 @@ import type { ThemeMode } from "../types/theme/theme-mode.type";
 const AppContext = createContext<IAppContext | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<ThemeMode>("light");
+  const [mode, setMode] = useState<ThemeMode>(() => {
+    const savedMode = localStorage.getItem("theme") as ThemeMode;
+
+    if (savedMode) return savedMode;
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+
+    root.classList.remove("light", "dark");
+    root.classList.add(mode);
+
+    localStorage.setItem("theme", mode);
+  }, [mode]);
 
   const toggleMode = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"));

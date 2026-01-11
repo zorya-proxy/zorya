@@ -19,5 +19,9 @@
   },
   "javascript.format.enable": false,
   "typescript.format.enable": false,
-  "prettier.enable": false
+  "prettier.enable": false,
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "*.scss": "tailwindcss"
+  }
 }
