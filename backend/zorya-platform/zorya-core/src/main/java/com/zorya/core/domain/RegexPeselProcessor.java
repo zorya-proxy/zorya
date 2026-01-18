@@ -40,6 +40,7 @@ public class RegexPeselProcessor extends RegexScanningProcessor{
         return RiskLevel.HIGH;
     }
 
+    @Override
     protected boolean isValidCandidate(String candidate) {
         return PeselValidator.isValid(candidate);
     }
