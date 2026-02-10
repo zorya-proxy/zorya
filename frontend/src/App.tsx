@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
 import { QueryProvider } from "./providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 import { AppProvider } from "./context/AppContext";
+
+import Home from "./pages/Home/Home";
+import { MainLayout } from "./layouts/MainLayout";
 
 function App() {
   return (
@@ -10,7 +12,9 @@ function App() {
       <AppProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+            </Route>
           </Routes>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
