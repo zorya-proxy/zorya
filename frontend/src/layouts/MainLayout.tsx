@@ -1,28 +1,49 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ModeToggle } from "@/components/ModeToggle";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 export const MainLayout = () => {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case "/":
+        return "Home";
+      case "/history":
+        return "History";
+      default:
+        return "Page";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background font-sans flex flex-col transition-colors duration-300">
-      <header className="sticky top-0 z-999 w-full border-b border-border/50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-            <span className="bg-linear-to-r from-primary to-chart-1 bg-clip-text text-transparent">Zorya Proxy</span>
+    <SidebarProvider>
+      <AppSidebar />
+
+      <SidebarInset>
+        <header className="sticky top-0 flex h-14 items-center justify-between px-4 border-b bg-background  ">
+          <div className="flex items-center gap-2 ">
+            <SidebarTrigger className="cursor-pointer" />
+
+            <span className="font-medium text-sm">{getPageTitle()}</span>
           </div>
 
           <div className="flex items-center gap-4">
             <ModeToggle />
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="flex-1 container mx-auto px-4 py-6">
-        <Outlet />
-      </main>
+        <main className="flex flex-1 flex-col gap-4 p-4 pt-4">
+          <div className="mx-auto w-full max-w-7xl">
+            <Outlet />
+          </div>
+        </main>
 
-      <footer className="border-t py-2 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Zorya Proxy. All rights reserved.</p>
-      </footer>
-    </div>
+        <footer className="border-t py-1 text-center text-xs text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} Zorya Proxy. All rights reserved.</p>
+        </footer>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
