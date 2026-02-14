@@ -5,5 +5,6 @@ public enum PiiEntityType {
     PESEL,
     PHONE,
     IBAN,
+    CCN,
     UNKNOWN
 }
