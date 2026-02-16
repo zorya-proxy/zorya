@@ -1,9 +1,6 @@
 package com.zorya.core.domain;
 
-import com.zorya.core.domain.model.AnalysisResult;
-import com.zorya.core.domain.model.PiiEntityType;
-import com.zorya.core.domain.model.PiiFinding;
-import com.zorya.core.domain.model.RiskLevel;
+import com.zorya.core.domain.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ public abstract class RegexScanningProcessor implements PiiProcessor{
     }
 
     @Override
-    public AnalysisResult mask(String text) {
+    public AnalysisResult mask(String text, AnalysisConfig config) {
         if(text == null || text.isEmpty()) {
             return new AnalysisResult(text, List.of());
         }

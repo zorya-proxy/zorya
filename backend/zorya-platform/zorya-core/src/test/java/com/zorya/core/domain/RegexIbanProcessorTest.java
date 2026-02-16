@@ -1,14 +1,18 @@
 package com.zorya.core.domain;
 
+import com.zorya.core.domain.model.AnalysisConfig;
 import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiEntityType;
 import com.zorya.core.domain.model.RiskLevel;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegexIbanProcessorTest {
     private final RegexIbanProcessor ibanProcessor = new RegexIbanProcessor();
+    private final AnalysisConfig TEST_CONFIG = new AnalysisConfig(false, List.of());
 
     @Test
     void shouldMaskIbanNumbersInTextAndReturnFindings() {
@@ -18,7 +22,7 @@ public class RegexIbanProcessorTest {
                 PL83189060332267864992513547. Thanks!
                 """;
 
-        AnalysisResult result = ibanProcessor.mask(input);
+        AnalysisResult result = ibanProcessor.mask(input, TEST_CONFIG);
 
         assertThat(result.maskedText()).isEqualTo("""
                 The bank transfer to the account:
@@ -41,7 +45,7 @@ public class RegexIbanProcessorTest {
     void shouldIgnoreFakeIban() {
         String input = "This is my order id: 11111111111111111111111111";
 
-        AnalysisResult analysisResult = ibanProcessor.mask(input);
+        AnalysisResult analysisResult = ibanProcessor.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.maskedText()).isEqualTo(input);
         assertThat(analysisResult.findings()).isEmpty();
@@ -51,7 +55,7 @@ public class RegexIbanProcessorTest {
     void shouldIgnoreTextWithNoIbanNumbers() {
         String input = "Hi. This is my mail: abc@example.com";
 
-        AnalysisResult analysisResult = ibanProcessor.mask(input);
+        AnalysisResult analysisResult = ibanProcessor.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.findings()).isEmpty();
         assertThat(analysisResult.maskedText()).isEqualTo(input);

@@ -1,6 +1,7 @@
 package com.zorya.core.domain.pipeline;
 
 import com.zorya.core.domain.PiiProcessor;
+import com.zorya.core.domain.model.AnalysisConfig;
 import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiFinding;
 import org.springframework.context.annotation.Primary;
@@ -22,12 +23,12 @@ public class PiiPipeline implements PiiProcessor {
     }
 
     @Override
-    public AnalysisResult mask(String text) {
+    public AnalysisResult mask(String text, AnalysisConfig config) {
         String currentText = text;
         List<PiiFinding> findings = new ArrayList<>();
 
         for (PiiProcessor processor : processors) {
-            AnalysisResult analysisResult = processor.mask(currentText);
+            AnalysisResult analysisResult = processor.mask(currentText, config);
 
             currentText = analysisResult.maskedText();
             findings.addAll(analysisResult.findings());

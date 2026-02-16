@@ -23,7 +23,7 @@ public class AnalyzeService {
 
     @Transactional
     public AnalyzeResponse processAnalysis(AnalyzeRequest request) {
-        AnalysisResult analysisResult = piiProcessor.mask(request.text());
+        AnalysisResult analysisResult = piiProcessor.mask(request.text(), request.config());
 
         AnalysisHistoryEntity entity = analysisMapper.toEntity(analysisResult);
 

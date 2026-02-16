@@ -1,14 +1,18 @@
 package com.zorya.core.domain;
 
+import com.zorya.core.domain.model.AnalysisConfig;
 import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiEntityType;
 import com.zorya.core.domain.model.RiskLevel;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegexPeselProcessorTest {
     private final RegexPeselProcessor peselProcessor = new RegexPeselProcessor();
+    private final AnalysisConfig TEST_CONFIG = new AnalysisConfig(false, List.of());
 
     @Test
     void shouldMaskPeselNumbersInTextAndReturnFindings() {
@@ -17,7 +21,7 @@ public class RegexPeselProcessorTest {
                 and my husband's PESEL is: 64111739699
                 """;
 
-        AnalysisResult result = peselProcessor.mask(input);
+        AnalysisResult result = peselProcessor.mask(input, TEST_CONFIG);
 
         assertThat(result.maskedText()).isEqualTo("""
                 My PESEL is: [PESEL_REDACTED]
@@ -39,7 +43,7 @@ public class RegexPeselProcessorTest {
     void shouldIgnoreFakePesel() {
         String input = "This is my order id: 12345678910";
 
-        AnalysisResult analysisResult = peselProcessor.mask(input);
+        AnalysisResult analysisResult = peselProcessor.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.maskedText()).isEqualTo(input);
         assertThat(analysisResult.findings()).isEmpty();
@@ -49,7 +53,7 @@ public class RegexPeselProcessorTest {
     void shouldIgnoreShortNumbers() {
         String input = "Phone number: 500100600";
 
-        AnalysisResult analysisResult = peselProcessor.mask(input);
+        AnalysisResult analysisResult = peselProcessor.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.findings()).isEmpty();
     }

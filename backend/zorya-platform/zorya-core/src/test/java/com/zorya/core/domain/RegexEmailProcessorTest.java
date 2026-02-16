@@ -1,13 +1,18 @@
 package com.zorya.core.domain;
 
+import com.zorya.core.domain.model.AnalysisConfig;
 import com.zorya.core.domain.model.AnalysisResult;
 import com.zorya.core.domain.model.PiiEntityType;
 import com.zorya.core.domain.model.RiskLevel;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegexEmailProcessorTest {
     private final RegexEmailProcessor emailProcessor = new RegexEmailProcessor();
+    private final AnalysisConfig TEST_CONFIG = new AnalysisConfig(false, List.of());
 
     @Test
     void shouldMaskEmailAddressesInTextAndReturnFindings() {
@@ -16,7 +21,7 @@ public class RegexEmailProcessorTest {
                 and this is a business one: xyz@example.com
                 """;
 
-        AnalysisResult result = emailProcessor.mask(input);
+        AnalysisResult result = emailProcessor.mask(input, TEST_CONFIG);
 
         assertThat(result.maskedText()).isEqualTo("""
                 Hi, this is my private email: [EMAIL_REDACTED]
@@ -38,7 +43,7 @@ public class RegexEmailProcessorTest {
     void shouldHandleShortEmailsCorrectly() {
         String input = "Short email: a@example.com";
 
-        AnalysisResult result = emailProcessor.mask(input);
+        AnalysisResult result = emailProcessor.mask(input, TEST_CONFIG);
 
         assertThat(result.maskedText()).isEqualTo("Short email: [EMAIL_REDACTED]");
         assertThat(result.findings()).hasSize(1);
@@ -49,7 +54,7 @@ public class RegexEmailProcessorTest {
 
     @Test
     void shouldReturnEmptyResultWhenInputIsNull() {
-        AnalysisResult result = emailProcessor.mask(null);
+        AnalysisResult result = emailProcessor.mask(null, TEST_CONFIG);
 
         assertThat(result.maskedText()).isNull();
         assertThat(result.findings()).isEmpty();

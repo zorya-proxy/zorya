@@ -2,10 +2,8 @@ package com.zorya.core.domain.pipeline;
 
 import com.zorya.core.domain.RegexEmailProcessor;
 import com.zorya.core.domain.RegexPeselProcessor;
-import com.zorya.core.domain.model.AnalysisResult;
-import com.zorya.core.domain.model.PiiEntityType;
-import com.zorya.core.domain.model.PiiFinding;
-import com.zorya.core.domain.model.RiskLevel;
+import com.zorya.core.domain.model.*;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,6 +12,7 @@ import java.util.List;
 
 public class PiiPipelineTest {
     private final PiiPipeline pipeline = new PiiPipeline(List.of(new RegexEmailProcessor(), new RegexPeselProcessor()));
+    private final AnalysisConfig TEST_CONFIG = new AnalysisConfig(false, List.of());
 
     @Test
     void shouldMaskBothEmailAndPeselInText() {
@@ -21,7 +20,7 @@ public class PiiPipelineTest {
                 Mail: abc123@example.com,
                 PESEL: 10272539874
                 """;
-        AnalysisResult analysisResult = pipeline.mask(input);
+        AnalysisResult analysisResult = pipeline.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.maskedText())
                 .contains("[EMAIL_REDACTED]")
@@ -46,7 +45,7 @@ public class PiiPipelineTest {
     void shouldHandleTextWithNoPii() {
         String input = "Input without sensitive data.";
 
-        AnalysisResult analysisResult = pipeline.mask(input);
+        AnalysisResult analysisResult = pipeline.mask(input, TEST_CONFIG);
 
         assertThat(analysisResult.maskedText()).isEqualTo(input);
         assertThat(analysisResult.findings()).isEmpty();

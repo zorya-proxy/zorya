@@ -1,13 +1,9 @@
 package com.zorya.dto;
 
-import java.util.List;
+import com.zorya.core.domain.model.AnalysisConfig;
 
 public record AnalyzeRequest(
         String text,
         AnalysisConfig config
 ) {
-    public record AnalysisConfig(
-            boolean useAi,
-            List<String> activeModules
-    ) {}
 }
