@@ -7,10 +7,11 @@ interface AnalysisAreaProps {
   value: string;
   onChange: (value: string) => void;
   onAnalyze: () => void;
+  onClear: () => void;
   isAnalyzing: boolean;
 }
 
-export function AnalysisArea({ value, onChange, onAnalyze, isAnalyzing }: AnalysisAreaProps) {
+export function AnalysisArea({ value, onChange, onAnalyze, onClear, isAnalyzing }: AnalysisAreaProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       if (value.trim() && !isAnalyzing) {
@@ -24,7 +25,7 @@ export function AnalysisArea({ value, onChange, onAnalyze, isAnalyzing }: Analys
     <div className="w-full mx-auto">
       <div
         className="
-          relative flex flex-col 
+          relative flex flex-col justify-between
           rounded-xl border border-input bg-primary-foreground/40 shadow-sm 
           transition-all overflow-hidden
         "
@@ -35,11 +36,10 @@ export function AnalysisArea({ value, onChange, onAnalyze, isAnalyzing }: Analys
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Enter text for analysis..."
-            minRows={2}
-            maxRows={15}
             className="
             w-full resize-none
-            max-h-[40vh] md:max-h-100
+            max-h-100
+            min-h-100
             focus:ring-0 focus:outline-none
             bg-transparent
             text-base p-2
@@ -50,26 +50,36 @@ export function AnalysisArea({ value, onChange, onAnalyze, isAnalyzing }: Analys
           />
         </div>
 
-        <div className="flex justify-between items-center p-2 bg-transparent border-t border-input rounded-b-lg">
+        <div className="flex justify-between items-center p-2 bg-transparent border-t border-input rounded-b-lg h-14">
           <div className="text-xs">{value.length} characters</div>
-
-          <Button
-            onClick={onAnalyze}
-            disabled={isAnalyzing || !value.trim()}
-            size="sm"
-            className="gap-2 rounded-lg cursor-pointer"
-          >
-            {isAnalyzing ? (
-              <>
-                <Spinner data-icon="inline-start" />
-                <span>Analyzing...</span>
-              </>
-            ) : (
-              <>
-                Analyze <Send className="size-4" />
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={onClear}
+              disabled={isAnalyzing || !value.trim()}
+              size="sm"
+              className="cursor-pointer"
+            >
+              Clear
+            </Button>
+            <Button
+              onClick={onAnalyze}
+              disabled={isAnalyzing || !value.trim()}
+              size="sm"
+              className="gap-2 cursor-pointer"
+            >
+              {isAnalyzing ? (
+                <>
+                  <Spinner data-icon="inline-start" />
+                  <span>Analyzing...</span>
+                </>
+              ) : (
+                <>
+                  Analyze <Send className="size-4" />
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
