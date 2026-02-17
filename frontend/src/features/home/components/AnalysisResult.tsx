@@ -1,10 +1,7 @@
-import { Copy, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AnalysisRiskItem } from "./AnalysisRiskItem";
 import type { AnalyzeResponse } from "@/interfaces/analyze/analyze-response.interface";
 import { RISK_TEXT_STYLES } from "@/constants/risk-styles.constant";
+import { CopyButton } from "@/components/CopyButton";
 
 interface AnalysisResultProps {
   result: AnalyzeResponse | null;
@@ -12,9 +9,6 @@ interface AnalysisResultProps {
 }
 
 export function AnalysisResult({ result, isLoading }: AnalysisResultProps) {
-  const [copied, setCopied] = useState(false);
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
   const riskColor = result ? RISK_TEXT_STYLES[result.riskLevel] : null;
 
   const renderedContent = () => {
@@ -48,14 +42,6 @@ export function AnalysisResult({ result, isLoading }: AnalysisResultProps) {
       }
       return <span key={`text-${startIndex}`}>{part}</span>;
     });
-  };
-
-  const handleCopy = () => {
-    if (!result) return;
-    navigator.clipboard.writeText(result.processedText);
-    setCopied(true);
-    setIsTooltipOpen(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -94,25 +80,7 @@ export function AnalysisResult({ result, isLoading }: AnalysisResultProps) {
               ""
             )}
           </div>
-          <TooltipProvider>
-            <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  onClick={handleCopy}
-                  disabled={!result}
-                  size="icon"
-                  className="cursor-pointer"
-                >
-                  {copied ? <Check /> : <Copy />}
-                </Button>
-              </TooltipTrigger>
-
-              <TooltipContent>
-                <p>{copied ? "Copied!" : "Copy result"}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <CopyButton textToCopy={result?.processedText ?? null} />
         </div>
       </div>
     </div>
