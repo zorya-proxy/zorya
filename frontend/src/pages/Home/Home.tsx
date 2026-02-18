@@ -1,12 +1,11 @@
 import { AnalysisArea } from "@/features/home/components/AnalysisArea";
 import { AnalysisResult } from "@/features/home/components/AnalysisResult";
-import type { AnalyzeResponse } from "@/interfaces/analyze/analyze-response.interface";
+import { useAnalyze } from "@/hooks/useAnalyze";
 import { useState } from "react";
 
 export default function Home() {
   const [text, setText] = useState<string>("");
-  const [processedData, setProcessedData] = useState<AnalyzeResponse | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const { mutate, isPending, data, reset } = useAnalyze();
 
   const handleChange = (value: string) => {
     setText(value);
@@ -14,31 +13,14 @@ export default function Home() {
 
   const handleClear = () => {
     setText("");
-    setProcessedData(null);
+    reset();
   };
 
   const handleAnalyze = () => {
-    console.log("Analyzing:", text.trim());
-    setIsAnalyzing(true);
-    setProcessedData(null);
+    const trimmedText = text.trim();
+    if (!trimmedText) return;
 
-    setTimeout(() => {
-      setIsAnalyzing(false);
-
-      const mockResponse: AnalyzeResponse = {
-        analysisId: "12345",
-        riskLevel: "LOW",
-        timestamp: new Date().toISOString(),
-        processedText:
-          "Moj email to [EMAIL_REDACTED] bo go lubie a ten niezbyt [EMAIL_REDACTED]. Mój pesel to: [PESEL_REDACTED], zły pesel to 04183009618.",
-        findings: [
-          { type: "EMAIL", value: "a***@gmail.com", startIndex: 13, endIndex: 29, risk: "LOW" },
-          { type: "EMAIL", value: "x***@wp.pl", startIndex: 56, endIndex: 86, risk: "MEDIUM" },
-          { type: "PESEL", value: "01*********", startIndex: 88, endIndex: 99, risk: "CRITICAL" },
-        ],
-      };
-      setProcessedData(mockResponse);
-    }, 1000);
+    mutate({ text: trimmedText });
   };
 
   return (
@@ -49,9 +31,9 @@ export default function Home() {
           onChange={handleChange}
           onAnalyze={handleAnalyze}
           onClear={handleClear}
-          isAnalyzing={isAnalyzing}
+          isAnalyzing={isPending}
         />
-        <AnalysisResult result={processedData} isLoading={isAnalyzing} />
+        <AnalysisResult result={data ?? null} isLoading={isPending} />
       </div>
     </main>
   );
