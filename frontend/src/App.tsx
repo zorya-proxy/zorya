@@ -6,6 +6,7 @@ import { AppProvider } from "./context/AppContext";
 import Home from "./pages/Home/Home";
 import { MainLayout } from "./layouts/MainLayout";
 import History from "./pages/History/History";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+
+        <Toaster richColors />
         <ReactQueryDevtools initialIsOpen={false} />
       </AppProvider>
     </QueryProvider>
