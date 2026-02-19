@@ -9,7 +9,9 @@ export const MainLayout = () => {
   const getPageTitle = () => {
     switch (location.pathname) {
       case "/":
-        return "Home";
+        return "Playground";
+      case "/home":
+        return "Dashboard";
       case "/history":
         return "History";
       default:
