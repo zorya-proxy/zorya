@@ -121,3 +121,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .custom-textarea-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-textarea-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-textarea-scrollbar::-webkit-scrollbar-thumb {
+    background: oklch(from var(--muted-foreground) l c h / 0.25);
+    border-radius: 999px;
+  }
+  .custom-textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: oklch(from var(--muted-foreground) l c h / 0.5);
+  }
+}
