@@ -6,5 +6,8 @@ public enum PiiEntityType {
     PHONE,
     IBAN,
     CCN,
+    PERSON,
+    MEDICAL,
+    OFFENSIVE,
     UNKNOWN
 }
