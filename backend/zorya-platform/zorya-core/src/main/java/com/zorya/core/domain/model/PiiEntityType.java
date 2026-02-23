@@ -8,6 +8,7 @@ public enum PiiEntityType {
     CCN,
     PERSON,
     MEDICAL,
+    ADDRESS,
     OFFENSIVE,
     UNKNOWN
 }
