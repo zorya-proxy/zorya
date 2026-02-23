@@ -5,5 +5,6 @@ public record PiiFinding(
         String value,
         int startIndex,
         int endIndex,
-        RiskLevel riskLevel
+        RiskLevel riskLevel,
+        String replacementText
 ) {}

@@ -20,14 +20,13 @@ public abstract class RegexScanningProcessor implements PiiProcessor{
     }
 
     @Override
-    public AnalysisResult mask(String text, AnalysisConfig config) {
+    public AnalysisResult process(String text, AnalysisConfig config) {
         if(text == null || text.isEmpty()) {
             return new AnalysisResult(text, List.of());
         }
 
         List<PiiFinding> findings = new ArrayList<>();
         Matcher matcher = getPattern().matcher(text);
-        StringBuilder sb = new StringBuilder();
 
         while(matcher.find()) {
             String candidate = matcher.group();
@@ -38,15 +37,14 @@ public abstract class RegexScanningProcessor implements PiiProcessor{
                         generateFindingValue(candidate),
                         matcher.start(),
                         matcher.end(),
-                        getRiskLevel()
+                        getRiskLevel(),
+                        getReplacementText()
 
                 ));
-                matcher.appendReplacement(sb, getReplacementText());
             }
         }
-        matcher.appendTail(sb);
 
-        return new AnalysisResult(sb.toString(), findings);
+        return new AnalysisResult(text, findings);
 
     }
 }

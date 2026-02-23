@@ -15,20 +15,16 @@ public class RegexIbanProcessorTest {
     private final AnalysisConfig TEST_CONFIG = new AnalysisConfig(false, List.of());
 
     @Test
-    void shouldMaskIbanNumbersInTextAndReturnFindings() {
+    void shouldProcessIbanNumbersInTextAndReturnFindings() {
         String input = """
                 The bank transfer to the account:
                 PL14189089655552134835086361 or
                 PL83189060332267864992513547. Thanks!
                 """;
 
-        AnalysisResult result = ibanProcessor.mask(input, TEST_CONFIG);
+        AnalysisResult result = ibanProcessor.process(input, TEST_CONFIG);
 
-        assertThat(result.maskedText()).isEqualTo("""
-                The bank transfer to the account:
-                [IBAN_REDACTED] or
-                [IBAN_REDACTED]. Thanks!
-                """);
+        assertThat(result.maskedText()).isEqualTo(input);
 
         assertThat(result.findings()).hasSize(2);
 
@@ -36,6 +32,7 @@ public class RegexIbanProcessorTest {
         assertThat(firstFinding.type()).isEqualTo(PiiEntityType.IBAN);
         assertThat(firstFinding.value()).isEqualTo("PL...6361");
         assertThat(firstFinding.riskLevel()).isEqualTo(RiskLevel.HIGH);
+        assertThat(firstFinding.replacementText()).isEqualTo("[IBAN_REDACTED]");
 
         var secondFinding = result.findings().get(1);
         assertThat(secondFinding.value()).isEqualTo("PL...3547");
@@ -45,7 +42,7 @@ public class RegexIbanProcessorTest {
     void shouldIgnoreFakeIban() {
         String input = "This is my order id: 11111111111111111111111111";
 
-        AnalysisResult analysisResult = ibanProcessor.mask(input, TEST_CONFIG);
+        AnalysisResult analysisResult = ibanProcessor.process(input, TEST_CONFIG);
 
         assertThat(analysisResult.maskedText()).isEqualTo(input);
         assertThat(analysisResult.findings()).isEmpty();
@@ -55,7 +52,7 @@ public class RegexIbanProcessorTest {
     void shouldIgnoreTextWithNoIbanNumbers() {
         String input = "Hi. This is my mail: abc@example.com";
 
-        AnalysisResult analysisResult = ibanProcessor.mask(input, TEST_CONFIG);
+        AnalysisResult analysisResult = ibanProcessor.process(input, TEST_CONFIG);
 
         assertThat(analysisResult.findings()).isEmpty();
         assertThat(analysisResult.maskedText()).isEqualTo(input);

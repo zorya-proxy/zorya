@@ -4,5 +4,5 @@ import com.zorya.core.domain.model.AnalysisConfig;
 import com.zorya.core.domain.model.AnalysisResult;
 
 public interface PiiProcessor {
-    AnalysisResult mask(String text, AnalysisConfig config);
+    AnalysisResult process(String text, AnalysisConfig config);
 }

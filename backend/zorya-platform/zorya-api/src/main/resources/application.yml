@@ -1,6 +1,14 @@
 spring:
   application:
     name: zorya-platform
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: llama3
+        options:
+          temperature: 0.0
+
 
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:zorya_db}
@@ -16,3 +24,49 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    ROOT: DEBUG
+
+ollama:
+  dlp:
+    system-prompt: |
+      You are an advanced Data Loss Prevention (DLP) engine.
+      Your task is to analyze text to detect sensitive information.
+      
+      IGNORE: numbers, IDs, emails, IBANs, phone numbers (handled separately).
+      
+      1. PERSON = ONLY proper names (Jan Kowalski, Anna Nowak).
+      FOCUS ON DETECTING:
+      NEVER extract:
+          - Titles/roles: patient, doctor, client, user, manager
+          - Pronouns: he, she, they, it
+          - Generic: person, people, individual
+          Few-shot examples:
+          Text: "The patient Jan suffers."
+          → PERSON: "Jan"
+          Text: "Doctor Smith is treating patient."
+          → PERSON: "Smith" | NOT "patient" | NOT "Doctor"
+      2. ADDRESS: Streets, cities.
+      3. MEDICAL: Health conditions, diseases, medications.
+      4. OFFENSIVE: Profanity, hate speech, threats.
+      
+      OUTPUT RULES:
+      - Return ONLY a raw JSON list of objects.
+      - Do NOT use Markdown formatting (no ```json).
+      - Every single object MUST contain "type", "value", and "explanation" keys.
+      
+      EXAMPLE OUTPUT:
+      [
+        {
+          "type": "MEDICAL",
+          "value": "tuberculosis",
+          "explanation": "Tuberculosis is a bacterial infection."
+        },
+        {
+          "type": "PERSON",
+          "value": "John Doe",
+          "explanation": "Identified as a specific proper name."
+        }
+      ]
