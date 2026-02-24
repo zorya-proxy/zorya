@@ -25,7 +25,7 @@ public class AnalyzeService {
     public AnalyzeResponse processAnalysis(AnalyzeRequest request) {
         AnalysisResult analysisResult = piiProcessor.process(request.text(), request.config());
 
-        AnalysisHistoryEntity entity = analysisMapper.toEntity(analysisResult);
+        AnalysisHistoryEntity entity = analysisMapper.toEntity(analysisResult, request);
 
         AnalysisHistoryEntity savedEntity = analysisHistoryRepository.save(entity);
 
