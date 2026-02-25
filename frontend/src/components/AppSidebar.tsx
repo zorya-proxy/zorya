@@ -37,7 +37,7 @@ export function AppSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar collapsible="icon" className="z-1000">
+    <Sidebar collapsible="icon" className="z-50">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

@@ -1,6 +1,8 @@
 import { DataTable } from "@/components/DataTable";
+import { HistoryPreviewDialog } from "@/features/history/components/HistoryPreviewDialog";
 import { useHistory } from "@/features/history/hooks/useHistory";
-import { historyTableColumns } from "@/features/history/utils/columns";
+import { getHistoryTableColumns } from "@/features/history/utils/columns";
+import type { AnalyzeHistoryItem } from "@/interfaces/history/analyze-history-item.interface";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
 
@@ -14,6 +16,10 @@ export default function History() {
 
   const sortParam = sorting.length ? `${sorting[0].id},${sorting[0].desc ? "desc" : "asc"}` : "timestamp,desc";
 
+  const [previewItem, setPreviewItem] = useState<AnalyzeHistoryItem | null>(null);
+
+  const columns = getHistoryTableColumns({ onPreview: setPreviewItem });
+
   const { data, isLoading, isFetching, isError, refetch } = useHistory({
     page: pagination.pageIndex,
     size: pagination.pageSize,
@@ -23,7 +29,7 @@ export default function History() {
   return (
     <main className="flex flex-col">
       <DataTable
-        columns={historyTableColumns}
+        columns={columns}
         data={data?.content || []}
         pageCount={data?.page?.totalPages ?? -1}
         sorting={sorting}
@@ -34,6 +40,14 @@ export default function History() {
         isRefetching={isFetching && !isLoading}
         isError={isError}
         onRetry={refetch}
+      />
+
+      <HistoryPreviewDialog
+        item={previewItem}
+        open={previewItem !== null}
+        onOpenChange={(open) => {
+          if (!open) setPreviewItem(null);
+        }}
       />
     </main>
   );

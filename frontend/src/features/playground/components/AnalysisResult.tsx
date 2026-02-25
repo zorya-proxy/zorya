@@ -1,7 +1,7 @@
-import { AnalysisRiskItem } from "./AnalysisRiskItem";
 import type { AnalyzeResponse } from "@/interfaces/analyze/analyze-response.interface";
 import { RISK_TEXT_STYLES } from "@/constants/risk-styles.constant";
 import { CopyButton } from "@/components/CopyButton";
+import { AnalyzeResultProcessed } from "@/components/AnalyzeResultProcessed";
 
 interface AnalysisResultProps {
   result: AnalyzeResponse | null;
@@ -10,39 +10,6 @@ interface AnalysisResultProps {
 
 export function AnalysisResult({ result, isLoading }: AnalysisResultProps) {
   const riskColor = result ? RISK_TEXT_STYLES[result.riskLevel] : null;
-
-  const renderedContent = () => {
-    if (!result) return null;
-
-    const { processedText, findings } = result;
-
-    const parts = processedText.split(/(\[[A-Z]+_REDACTED\])/g);
-    const sortedFindings = [...findings].sort((a, b) => a.startIndex - b.startIndex);
-
-    let findingIndex = 0;
-    let currOffset = 0;
-
-    return parts.map((part) => {
-      const startIndex = currOffset;
-      currOffset += part.length;
-      if (part.match(/^\[[A-Z]+_REDACTED\]$/)) {
-        const finding = sortedFindings[findingIndex];
-        findingIndex++;
-
-        if (finding) {
-          return (
-            <AnalysisRiskItem
-              key={`risk-${finding.startIndex}`}
-              value={part}
-              riskLevel={finding.risk}
-              findingValue={finding.value}
-            />
-          );
-        }
-      }
-      return <span key={`text-${startIndex}`}>{part}</span>;
-    });
-  };
 
   return (
     <div className="w-full mx-auto">
@@ -62,10 +29,10 @@ export function AnalysisResult({ result, isLoading }: AnalysisResultProps) {
           >
             {isLoading ? (
               <div className="animate-pulse text-muted-foreground">Analyzing...</div>
+            ) : result ? (
+              <AnalyzeResultProcessed result={result} />
             ) : (
-              renderedContent() || (
-                <span className="text-muted-foreground opacity-50">Here will be result of the analysis</span>
-              )
+              <span className="text-muted-foreground opacity-50">Here will be result of the analysis</span>
             )}
           </div>
         </div>

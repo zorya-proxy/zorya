@@ -24,7 +24,7 @@ export const MainLayout = () => {
       <AppSidebar />
 
       <SidebarInset>
-        <header className="sticky top-0 flex h-14 items-center justify-between px-4 border-b bg-background z-999">
+        <header className="sticky top-0 flex h-14 items-center justify-between px-4 border-b bg-background z-49">
           <div className="flex items-center gap-2 ">
             <SidebarTrigger className="cursor-pointer" />
 
