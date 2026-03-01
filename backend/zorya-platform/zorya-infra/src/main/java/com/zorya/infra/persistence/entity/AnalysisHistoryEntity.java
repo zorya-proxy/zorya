@@ -1,5 +1,6 @@
 package com.zorya.infra.persistence.entity;
 
+import com.zorya.core.domain.model.RequestSource;
 import com.zorya.core.domain.model.RiskLevel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +35,10 @@ public class AnalysisHistoryEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "risk_level")
     private RiskLevel riskLevel;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "request_source", nullable = false)
+    private RequestSource requestSource;
 
     @OneToMany(mappedBy = "analysisHistory", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

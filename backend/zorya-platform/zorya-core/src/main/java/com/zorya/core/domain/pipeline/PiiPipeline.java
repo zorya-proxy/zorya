@@ -42,7 +42,8 @@ public class PiiPipeline implements PiiProcessor {
             findings.addAll(collectAiFindings(text, findings));
         }
 
-        String maskedText = applyFinalMasking(text, findings);
+        List<PiiFinding> resolvedFindings = removeOverlaps(findings);
+        String maskedText = applyFinalMasking(text, resolvedFindings);
 
         return new AnalysisResult(maskedText, findings);
     }
@@ -83,4 +84,23 @@ public class PiiPipeline implements PiiProcessor {
         return sb.toString();
 
     }
+
+    private List<PiiFinding> removeOverlaps(List<PiiFinding> findings) {
+        if (findings.isEmpty()) return findings;
+
+        findings.sort(Comparator.comparingInt(PiiFinding::startIndex)
+                .thenComparing(Comparator.comparingInt(PiiFinding::endIndex).reversed()));
+
+        List<PiiFinding> cleanFindings = new ArrayList<>();
+        int currentEnd = -1;
+
+        for (PiiFinding finding : findings) {
+            if (finding.startIndex() >= currentEnd) {
+                cleanFindings.add(finding);
+                currentEnd = finding.endIndex();
+            }
+        }
+        return cleanFindings;
+    }
+
 }
