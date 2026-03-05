@@ -3,7 +3,7 @@ export type RiskType =
   | "PESEL"
   | "PHONE"
   | "IBAN"
-  | "CNN"
+  | "CCN"
   | "PERSON"
   | "MEDICAL"
   | "ADDRESS"

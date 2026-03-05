@@ -1,10 +1,10 @@
 import type { AnalyzeResponse } from "@/interfaces/analyze/analyze-response.interface";
 import type { Page } from "@/interfaces/core/page.interface";
-import type { PageableRequest } from "@/interfaces/core/pageable-request.interface";
 import type { AnalyzeHistoryItem } from "@/interfaces/history/analyze-history-item.interface";
+import type { PageableHistoryRequest } from "@/interfaces/history/pageable-history-request.interface";
 import { apiClient } from "@/lib/api-client";
 
-export const getHistory = async (params?: PageableRequest): Promise<Page<AnalyzeHistoryItem>> => {
+export const getHistory = async (params?: PageableHistoryRequest): Promise<Page<AnalyzeHistoryItem>> => {
   const res = await apiClient.get<Page<AnalyzeResponse>>("/history", {
     params,
   });
