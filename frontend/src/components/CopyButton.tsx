@@ -1,6 +1,6 @@
 import { Check, Copy } from "lucide-react";
 import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { useState } from "react";
 
 interface CopyButtonProps {
@@ -20,18 +20,16 @@ export function CopyButton({ textToCopy }: CopyButtonProps) {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-        <TooltipTrigger asChild>
-          <Button variant="outline" onClick={handleCopy} disabled={!textToCopy} size="icon" className="cursor-pointer">
-            {copied ? <Check /> : <Copy />}
-          </Button>
-        </TooltipTrigger>
+    <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
+      <TooltipTrigger asChild>
+        <Button variant="outline" onClick={handleCopy} disabled={!textToCopy} size="icon" className="cursor-pointer">
+          {copied ? <Check /> : <Copy />}
+        </Button>
+      </TooltipTrigger>
 
-        <TooltipContent>
-          <p>{copied ? "Copied!" : "Copy result"}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+      <TooltipContent>
+        <p>{copied ? "Copied!" : "Copy result"}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }
