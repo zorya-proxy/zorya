@@ -10,7 +10,7 @@ export const MainLayout = () => {
     switch (location.pathname) {
       case "/":
         return "Playground";
-      case "/home":
+      case "/dashboard":
         return "Dashboard";
       case "/history":
         return "History";
