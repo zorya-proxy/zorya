@@ -10,6 +10,10 @@ export interface PieDonutChartDatum extends PieDonutChartItem {
   percent: number;
 }
 
+export interface PieHistoryListItem extends PieDonutChartItem {
+  percent?: number;
+}
+
 export interface PieDonutChartProps {
   data: PieDonutChartItem[];
   className?: string;

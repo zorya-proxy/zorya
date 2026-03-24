@@ -5,14 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/co
 import { Spinner } from "@/components/ui/spinner";
 import { useDelayedVisibility } from "@/hooks/use-delayed-visibility";
 import { cn } from "@/lib/utils";
-
-export type DashboardCardTone = "neutral" | "attention" | "critical";
-
-const toneClasses: Record<DashboardCardTone, string> = {
-  neutral: "bg-gradient-to-br from-card via-card to-muted/45",
-  attention: "border-amber-500/30 bg-gradient-to-br from-card to-amber-500/8",
-  critical: "border-red-500/30 bg-gradient-to-br from-card to-red-500/10",
-};
+import type { DashboardCardTone } from "@/types/dashboard/dashboard-card-tome.type";
+import { TONE_CLASSES } from "@/constants/dashboard/tone-clases";
 
 interface DashboardCardProps {
   title: string;
@@ -46,8 +40,8 @@ export function DashboardCard({
   return (
     <Card
       className={cn(
-        "relative h-full overflow-hidden border-border/70 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md",
-        toneClasses[tone],
+        "relative h-full overflow-hidden border-border/70 shadow-sm transition-all duration-200 hover:scale-102 hover:shadow-lg ",
+        TONE_CLASSES[tone],
         className,
       )}
     >

@@ -1,9 +1,5 @@
-import type { PieDonutChartItem } from "@/components/charts/types/pie-donut-chart.type";
+import type { PieHistoryListItem } from "@/components/charts/types/pie-donut-chart.type";
 import { cn } from "@/lib/utils";
-
-export interface PieHistoryListItem extends PieDonutChartItem {
-  percent?: number;
-}
 
 interface PieHistoryListProps {
   data: PieHistoryListItem[];
@@ -39,7 +35,7 @@ export function PieHistoryList({
               className={cn(
                 "group flex w-full items-center justify-between rounded-md border border-border/60 bg-background/70 px-2.5 py-1.5 text-left transition-colors",
                 isInteractive ? "cursor-pointer hover:bg-accent/40" : "cursor-default",
-                inactiveIds?.has(item.id) ? "opacity-45" : "opacity-100",
+                inactiveIds?.has(item.id) ? "opacity-35 line-through" : "opacity-100 no-underline",
               )}
               aria-pressed={isInteractive ? !inactiveIds?.has(item.id) : undefined}
             >
