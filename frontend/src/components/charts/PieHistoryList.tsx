@@ -1,4 +1,4 @@
-import type { PieHistoryListItem } from "@/components/charts/types/pie-donut-chart.type";
+import type { PieHistoryListItem } from "@/components/charts/interfaces/pie-donut-chart.interface";
 import { cn } from "@/lib/utils";
 
 interface PieHistoryListProps {

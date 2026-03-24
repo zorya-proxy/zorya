@@ -1,5 +1,5 @@
 import type { ChartConfig } from "@/components/ui/chart";
-import type { PieDonutChartDatum, PieDonutChartItem } from "@/components/charts/types/pie-donut-chart.type";
+import type { PieDonutChartDatum, PieDonutChartItem } from "@/components/charts/interfaces/pie-donut-chart.interface";
 
 export function buildPieDonutChartData(data: PieDonutChartItem[]): PieDonutChartDatum[] {
   const total = data.reduce((sum, item) => sum + item.value, 0);

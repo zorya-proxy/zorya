@@ -1,6 +1,6 @@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
-import type { PieDonutChartDatum, PieDonutChartProps } from "@/components/charts/types/pie-donut-chart.type";
+import type { PieDonutChartDatum, PieDonutChartProps } from "@/components/charts/interfaces/pie-donut-chart.interface";
 import { buildPieDonutChartConfig, buildPieDonutChartData } from "@/components/charts/utils/pie-donut-chart.utils";
 import { useState } from "react";
 import { Cell, Pie, PieChart } from "recharts";
