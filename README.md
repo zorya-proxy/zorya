@@ -128,6 +128,16 @@ Advanced data table for browsing past scans, featuring dynamic multi-criteria fi
 
 ![alt text](docs/image-1.png)
 
+### Dashboard
+
+Comprehensive analytics overview providing real-time insights into security trends and data exposure across your organization.
+- **Key Metrics** – Instant visibility into total analysis volume and the count of critical threats requiring immediate validation.
+- **PII Distribution** – Interactive donut chart visualizing the most frequent types of sensitive data detected (e.g., PESEL, Person, Email, CCN).
+- **Top Sources** – Identification of the most active client identifiers or API consumers generating findings.
+- **Time-based Filtering** – Flexible data ranges (e.g., Last 24 hours, Last 30 days, Last 3 months) for trend analysis.
+
+![alt text](docs/dashboard-image.png)
+![alt text](docs/dashboard-image-mobile.png)
 
 ### Theme Support
 
