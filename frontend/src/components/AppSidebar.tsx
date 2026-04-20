@@ -1,4 +1,4 @@
-import { Home, History, LayoutDashboard, Play } from "lucide-react";
+import { History, LayoutDashboard, Play } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -23,8 +23,8 @@ const items: SidebarItem[] = [
   },
   {
     title: "Dashboard",
-    url: "/home",
-    icon: Home,
+    url: "/dashboard",
+    icon: LayoutDashboard,
   },
   {
     title: "History",

@@ -7,8 +7,8 @@ import type { AnalyzeHistoryItem } from "@/interfaces/history/analyze-history-it
 import type { HistoryFiltersState } from "@/interfaces/history/history-filters-state.interface";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
-import { format } from "date-fns";
 import isEqual from "lodash/isEqual";
+import { buildDateRangeQueryParams } from "@/services/date-range.service";
 
 export default function History() {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -28,19 +28,19 @@ export default function History() {
       page: pagination.pageIndex,
       size: pagination.pageSize,
       sort: sortParam,
-      sources: filters.sources ? filters.sources.join(",") : undefined,
-      riskLevels: filters.riskLevels ? filters.riskLevels.join(",") : undefined,
-      piiTypes: filters.piiTypes ? filters.piiTypes.join(",") : undefined,
-      startDate: filters.startDate ? `${format(filters.startDate, "yyyy-MM-dd")}T00:00:00Z` : undefined,
-      endDate: filters.endDate ? `${format(filters.endDate, "yyyy-MM-dd")}T23:59:59Z` : undefined,
+      sources: filters.sources?.length ? filters.sources.join(",") : undefined,
+      riskLevels: filters.riskLevels?.length ? filters.riskLevels.join(",") : undefined,
+      piiTypes: filters.piiTypes?.length ? filters.piiTypes.join(",") : undefined,
+      ...buildDateRangeQueryParams({
+        dateFrom: filters.startDate,
+        dateTo: filters.endDate,
+      }),
     };
   };
 
   const { data, isLoading, isFetching, isError, refetch } = useHistory(buildQueryParams());
 
   const handleSearch = (newFilters: HistoryFiltersState) => {
-    // setFilters(newFilters);
-    // setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     const isStateSame = isEqual(filters, newFilters) && pagination.pageIndex === 0;
 
     setFilters(newFilters);

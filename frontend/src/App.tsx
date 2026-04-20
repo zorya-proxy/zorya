@@ -3,7 +3,7 @@ import { QueryProvider } from "./providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 import { AppProvider } from "./context/AppContext";
 
-import Home from "./pages/Home/Home";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import { MainLayout } from "./layouts/MainLayout";
 import History from "./pages/History/History";
 import { Toaster } from "./components/ui/sonner";
@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<Playground />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/history" element={<History />} />
               <Route path="*" element={<Navigate to="/" />}></Route>
             </Route>
